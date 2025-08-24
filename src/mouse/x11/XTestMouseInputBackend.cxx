@@ -24,8 +24,9 @@
 namespace wxclicker::mouse::x11 {
 
 XTestMouseInputBackend::XTestMouseInputBackend()
-    : _display{XOpenDisplay(nullptr)}
 {
+    _display = ::XOpenDisplay(nullptr);
+
     if (!_display) {
         throw std::runtime_error("Failed to open display");
     }
@@ -36,7 +37,7 @@ XTestMouseInputBackend::XTestMouseInputBackend()
 XTestMouseInputBackend::~XTestMouseInputBackend()
 {
     if (_display) {
-        XCloseDisplay(_display);
+        ::XCloseDisplay(_display);
     }
 }
 
@@ -53,8 +54,8 @@ void XTestMouseInputBackend::Down(MouseButton button) noexcept
         return;
     }
 
-    XTestFakeButtonEvent(_display, xbutton, True, CurrentTime);
-    XFlush(_display);
+    ::XTestFakeButtonEvent(_display, xbutton, True, CurrentTime);
+    ::XFlush(_display);
 }
 
 void XTestMouseInputBackend::Up(MouseButton button) noexcept
@@ -65,28 +66,24 @@ void XTestMouseInputBackend::Up(MouseButton button) noexcept
         return;
     }
     
-    XTestFakeButtonEvent(_display, xbutton, False, CurrentTime);
-    XFlush(_display);
+    ::XTestFakeButtonEvent(_display, xbutton, False, CurrentTime);
+    ::XFlush(_display);
 }
 
 void XTestMouseInputBackend::SetPosition(int x, int y) noexcept
 {
-    XTestFakeMotionEvent(_display, -1, x, y, CurrentTime);
-    XFlush(_display);
+    ::XTestFakeMotionEvent(_display, -1, x, y, CurrentTime);
+    ::XFlush(_display);
 }
 
 int XTestMouseInputBackend::ToX11ButtonNumber(MouseButton button)
     const noexcept
 {
     switch (button) {
-        case MouseButton::Left:
-            return 1;
-        case MouseButton::Middle:
-            return 2;
-        case MouseButton::Right:
-            return 3;
-        default:
-            break;
+        case MouseButton::Left:     return 1;
+        case MouseButton::Middle:   return 2;
+        case MouseButton::Right:    return 3;
+        default: break;
     }
 
     return -1;
