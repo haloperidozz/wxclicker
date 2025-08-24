@@ -9,6 +9,7 @@ target_include_directories(wxclicker PRIVATE
 target_sources(wxclicker PRIVATE
     application/ClickerApplication.cxx
     mouse/MouseInputBackendRegistry.cxx
+    mouse/RegisterPlatformBackends.cxx
     services/AutoClicker.cxx
     ui/generated/BaseClickerFrame.cpp
     ui/PickScreenPointDialog.cxx
@@ -16,15 +17,15 @@ target_sources(wxclicker PRIVATE
 )
 
 if (WIN32)
+    target_compile_definitions(wxclicker PRIVATE WXCLICKER_WIN32=1)
     target_sources(wxclicker PRIVATE
         mouse/win32/BaseMouseInputBackend.cxx
         mouse/win32/NtUserSendInputBackend.cxx
-        mouse/win32/RegisterPlatformBackends.cxx
         mouse/win32/SendInputBackend.cxx
         resource/WxClicker.rc
     )
 elseif (UNIX AND NOT APPLE)
-    # TODO:
+    target_compile_definitions(wxclicker PRIVATE WXCLICKER_LINUX=1)
 else ()
     message(FATAL_ERROR "${CMAKE_SYSTEM_NAME} not supported")
 endif ()

@@ -21,16 +21,28 @@
 
 #include "mouse/MouseInputBackendRegistry.hxx"
 
-#include "mouse/win32/SendInputBackend.hxx"
-#include "mouse/win32/NtUserSendInputBackend.hxx"
+#if defined(WXCLICKER_WIN32)
+    #include "mouse/win32/SendInputBackend.hxx"
+    #include "mouse/win32/NtUserSendInputBackend.hxx"
+#endif
+
+#if defined(WXCLICKER_LINUX)
+    // TODO:
+#endif
 
 void wxclicker::mouse::RegisterPlatformBackends()
 {
-    using namespace win32;
-
     auto& registry{MouseInputBackendRegistry::Instance()};
+
+#if defined(WXCLICKER_WIN32)
+    using namespace win32;
 
     registry.Register(std::make_shared<NtUserSendInputBackend>());
     registry.Register(std::make_shared<NtUserSendInputBackend>(true));
     registry.Register(std::make_shared<SendInputBackend>());
+#endif
+
+#if defined(WXCLICKER_LINUX)
+    // TODO:
+#endif
 }
