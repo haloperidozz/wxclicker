@@ -28,6 +28,9 @@ if (WIN32)
     )
 elseif (UNIX AND NOT APPLE)
     target_compile_definitions(wxclicker PRIVATE WXCLICKER_LINUX)
+    target_sources(wxclicker PRIVATE
+        mouse/gnulinux/UinputMouseInputBackend.cxx
+    )
 else ()
     message(FATAL_ERROR "${CMAKE_SYSTEM_NAME} not supported")
 endif ()

@@ -27,7 +27,7 @@
 #endif
 
 #if defined(WXCLICKER_LINUX)
-    // TODO:
+    #include "mouse/gnulinux/UinputMouseInputBackend.hxx"
 #endif
 
 #if defined(WXCLICKER_X11)
@@ -47,7 +47,9 @@ void wxclicker::mouse::RegisterPlatformBackends()
 #endif
 
 #if defined(WXCLICKER_LINUX)
-    // TODO:
+    using namespace gnulinux;
+
+    registry.Register(std::make_shared<UinputMouseInputBackend>());
 #endif
 
 #if defined(WXCLICKER_X11)

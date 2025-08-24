@@ -15,17 +15,31 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "mouse/RegisterPlatformBackends.hxx"
+#pragma once
 
-#include <memory>
+#include "mouse/IMouseInputBackend.hxx"
 
-#include "mouse/MouseInputBackendRegistry.hxx"
+namespace wxclicker::mouse::gnulinux {
 
-#include "mouse/x11/XTestMouseInputBackend.hxx"
-
-void wxclicker::mouse::RegisterPlatformBackends()
+class UinputMouseInputBackend final : public IMouseInputBackend
 {
-    auto& registry{MouseInputBackendRegistry::Instance()};
+public:
+    UinputMouseInputBackend();
+    ~UinputMouseInputBackend();
 
-    // TODO:
-}
+    std::string_view GetName() const noexcept override;
+    
+    void Down(MouseButton button) noexcept override;
+    void Up(MouseButton button) noexcept override;
+
+    void SetPosition(int x, int y) noexcept override;
+
+private:
+    void Emit(int type, int code, int val) noexcept;
+
+    int ToUinputKeyCode(MouseButton button) const noexcept;
+
+    int _fd{-1};
+};
+
+} // namespace wxclicker::mouse::gnulinux
