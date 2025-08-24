@@ -24,7 +24,9 @@ AutoClicker::AutoClicker(const Options& options)
 {
 }
 
-void AutoClicker::WorkerThread(std::stop_token stopToken, mouse::MouseBackendPtr pBackend)
+void AutoClicker::WorkerThread(
+    std::stop_token stopToken,
+    mouse::MouseInputBackendShared backend)
 {
     Options options;
 
@@ -51,13 +53,13 @@ void AutoClicker::WorkerThread(std::stop_token stopToken, mouse::MouseBackendPtr
         if (options.clickPosition) {
             const auto[x, y] = *options.clickPosition;
 
-            pBackend->SetPosition(x, y);
+            backend->SetPosition(x, y);
         }
 
         for (int i{0}; i < options.clickCount; ++i) {
-            pBackend->Down(options.button);
+            backend->Down(options.button);
             delay(options.clickDelay);
-            pBackend->Up(options.button);
+            backend->Up(options.button);
         }
 
         delay(options.interval);
@@ -79,12 +81,12 @@ void AutoClicker::WorkerThread(std::stop_token stopToken, mouse::MouseBackendPtr
     }
 }
 
-void AutoClicker::Start(mouse::MouseBackendPtr pBackend)
+void AutoClicker::Start(mouse::MouseInputBackendShared backend)
 {
     using namespace std::placeholders;
 
-    if (!pBackend) {
-        throw std::invalid_argument{"pBackend is null"};
+    if (!backend) {
+        throw std::invalid_argument{"backend is null"};
     }
 
     std::scoped_lock lock{_mutex};
@@ -96,9 +98,9 @@ void AutoClicker::Start(mouse::MouseBackendPtr pBackend)
     }
 
     // signature:
-    // WorkerThread(AutoClicker*, std::stop_token, MouseBackendPtr)
+    // WorkerThread(AutoClicker*, std::stop_token, mouse::Mouse...)
     _workerThread = std::jthread{
-        std::bind(&AutoClicker::WorkerThread, this, _1, pBackend)
+        std::bind(&AutoClicker::WorkerThread, this, _1, backend)
     };
 }
 

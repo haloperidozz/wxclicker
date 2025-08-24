@@ -25,7 +25,8 @@ MouseInputBackendRegistry& MouseInputBackendRegistry::Instance() noexcept
     return instance;
 }
 
-MouseBackendPtr MouseInputBackendRegistry::Get(std::string_view name) const noexcept
+MouseInputBackendShared MouseInputBackendRegistry::Get(std::string_view name)
+    const noexcept
 {
     const std::string key{name};
 
@@ -36,24 +37,28 @@ MouseBackendPtr MouseInputBackendRegistry::Get(std::string_view name) const noex
     return nullptr;
 }
 
-std::vector<MouseBackendPtr> MouseInputBackendRegistry::List() const noexcept
+std::vector<MouseInputBackendShared> MouseInputBackendRegistry::List()
+    const noexcept
 {
     const auto values{_backends | std::views::values};
     
     return std::vector(values.begin(), values.end());
 }
 
-bool MouseInputBackendRegistry::IsAvailable(std::string_view name) const noexcept
+bool MouseInputBackendRegistry::IsAvailable(std::string_view name)
+    const noexcept
 {
     return _backends.contains(std::string{name});
 }
 
-MouseBackendPtr MouseInputBackendRegistry::GetDefaultBackend() const noexcept
+MouseInputBackendShared MouseInputBackendRegistry::GetDefaultBackend()
+    const noexcept
 {
     return _backends.empty() ? nullptr : _backends.begin()->second;
 }
 
-bool MouseInputBackendRegistry::Register(MouseBackendPtr backend) noexcept
+bool MouseInputBackendRegistry::Register(MouseInputBackendShared backend)
+    noexcept
 {
     if (!backend) {
         return false;

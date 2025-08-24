@@ -35,18 +35,18 @@ public:
     static MouseInputBackendRegistry& Instance() noexcept;
 
     [[nodiscard]]
-    MouseBackendPtr Get(std::string_view name) const noexcept;
+    MouseInputBackendShared Get(std::string_view name) const noexcept;
 
     [[nodiscard]]
-    std::vector<MouseBackendPtr> List() const noexcept;
+    std::vector<MouseInputBackendShared> List() const noexcept;
 
     [[nodiscard]]
     bool IsAvailable(std::string_view name) const noexcept;
 
     [[nodiscard]]
-    MouseBackendPtr GetDefaultBackend() const noexcept;
+    MouseInputBackendShared GetDefaultBackend() const noexcept;
 
-    bool Register(MouseBackendPtr backend) noexcept;
+    bool Register(MouseInputBackendShared backend) noexcept;
 
 private:
     MouseInputBackendRegistry() = default;
@@ -57,7 +57,7 @@ private:
     MouseInputBackendRegistry(MouseInputBackendRegistry&&) = delete;
     MouseInputBackendRegistry& operator=(MouseInputBackendRegistry&&) = delete;
 
-    std::unordered_map<std::string, MouseBackendPtr> _backends;
+    std::unordered_map<std::string, MouseInputBackendShared> _backends;
 };
 
 } // namespace wxclicker::mouse

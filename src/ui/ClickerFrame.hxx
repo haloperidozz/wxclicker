@@ -47,7 +47,7 @@ private:
 
     services::AutoClicker          _clicker{};
     services::AutoClicker::Options _options{};
-    mouse::MouseBackendPtr         _backend{nullptr};
+    mouse::MouseInputBackendShared _backend{nullptr};
 };
 
 } // namespace wxclicker::ui

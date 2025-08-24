@@ -55,7 +55,7 @@ public:
     AutoClicker(AutoClicker&&) noexcept = delete;
     AutoClicker& operator=(AutoClicker&&) noexcept = delete;
 
-    void Start(mouse::MouseBackendPtr pBackend);
+    void Start(mouse::MouseInputBackendShared backend);
     void RequestStop() noexcept;
 
     void OnFinished(OnFinishedCallback callback);
@@ -63,7 +63,9 @@ public:
     void Configure(const Options& options);
 
 private:
-    void WorkerThread(std::stop_token stopToken, mouse::MouseBackendPtr pBackend);
+    void WorkerThread(
+        std::stop_token stopToken,
+        mouse::MouseInputBackendShared backend);
 
     Options                             _options{};
     OnFinishedCallback                  _onFinished;

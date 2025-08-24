@@ -37,6 +37,6 @@ public:
     virtual void SetPosition(int x, int y) noexcept = 0;
 };
 
-using MouseBackendPtr = std::shared_ptr<IMouseInputBackend>;
+using MouseInputBackendShared = std::shared_ptr<IMouseInputBackend>;
 
 } // namespace wxclicker::mouse
