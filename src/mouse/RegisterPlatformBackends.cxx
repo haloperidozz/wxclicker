@@ -34,27 +34,47 @@
     #include "mouse/x11/XTestMouseInputBackend.hxx"
 #endif
 
-void wxclicker::mouse::RegisterPlatformBackends()
+namespace wxclicker::mouse {
+
+namespace {
+
+template<typename T, typename... Args>
+void SafeRegister(Args&&... args)
+{
+    auto& reg{MouseInputBackendRegistry::Instance()};
+
+    try {
+        reg.Register(std::make_shared<T>(std::forward<Args>(args)...));
+    } catch (...) {
+        // ignore?
+    }
+}
+
+} // namespace
+
+void RegisterPlatformBackends()
 {
     auto& registry{MouseInputBackendRegistry::Instance()};
 
 #if defined(WXCLICKER_WIN32)
     using namespace win32;
 
-    registry.Register(std::make_shared<NtUserSendInputBackend>());
-    registry.Register(std::make_shared<NtUserSendInputBackend>(true));
-    registry.Register(std::make_shared<SendInputBackend>());
+    SafeRegister<NtUserSendInputBackend>();
+    SafeRegister<NtUserSendInputBackend>(true);
+    SafeRegister<SendInputBackend>();
 #endif
 
 #if defined(WXCLICKER_LINUX)
     using namespace gnulinux;
 
-    registry.Register(std::make_shared<UinputMouseInputBackend>());
+    SafeRegister<UinputMouseInputBackend>();
 #endif
 
 #if defined(WXCLICKER_X11)
     using namespace x11;
 
-    registry.Register(std::make_shared<XTestMouseInputBackend>());
+    SafeRegister<XTestMouseInputBackend>();
 #endif
 }
+
+} // namespace wxclicker::mouse
