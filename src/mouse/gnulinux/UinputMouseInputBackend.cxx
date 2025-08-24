@@ -95,13 +95,25 @@ std::string_view UinputMouseInputBackend::GetName() const noexcept
 
 void UinputMouseInputBackend::Down(MouseButton button) noexcept
 {
-    Emit(EV_KEY, ToUinputKeyCode(button), 1);
+    const auto keycode{ToUinputKeyCode(button)};
+
+    if (keycode < 0) {
+        return;
+    }
+
+    Emit(EV_KEY, keycode, 1);
     Emit(EV_SYN, SYN_REPORT, 0);
 }
 
 void UinputMouseInputBackend::Up(MouseButton button) noexcept
 {
-    Emit(EV_KEY, ToUinputKeyCode(button), 0);
+    const auto keycode{ToUinputKeyCode(button)};
+
+    if (keycode < 0) {
+        return;
+    }
+
+    Emit(EV_KEY, keycode, 0);
     Emit(EV_SYN, SYN_REPORT, 0);
 }
 
