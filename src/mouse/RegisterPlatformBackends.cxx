@@ -30,6 +30,10 @@
     // TODO:
 #endif
 
+#if defined(WXCLICKER_X11)
+    #include "mouse/x11/XTestMouseInputBackend.hxx"
+#endif
+
 void wxclicker::mouse::RegisterPlatformBackends()
 {
     auto& registry{MouseInputBackendRegistry::Instance()};
@@ -44,5 +48,11 @@ void wxclicker::mouse::RegisterPlatformBackends()
 
 #if defined(WXCLICKER_LINUX)
     // TODO:
+#endif
+
+#if defined(WXCLICKER_X11)
+    using namespace x11;
+
+    registry.Register(std::make_shared<XTestMouseInputBackend>());
 #endif
 }

@@ -1,3 +1,5 @@
+find_package(X11 COMPONENTS Xtst)
+
 add_executable(wxclicker)
 
 target_compile_features(wxclicker PRIVATE cxx_std_20)
@@ -17,7 +19,7 @@ target_sources(wxclicker PRIVATE
 )
 
 if (WIN32)
-    target_compile_definitions(wxclicker PRIVATE WXCLICKER_WIN32=1)
+    target_compile_definitions(wxclicker PRIVATE WXCLICKER_WIN32)
     target_sources(wxclicker PRIVATE
         mouse/win32/BaseMouseInputBackend.cxx
         mouse/win32/NtUserSendInputBackend.cxx
@@ -25,7 +27,7 @@ if (WIN32)
         resource/WxClicker.rc
     )
 elseif (UNIX AND NOT APPLE)
-    target_compile_definitions(wxclicker PRIVATE WXCLICKER_LINUX=1)
+    target_compile_definitions(wxclicker PRIVATE WXCLICKER_LINUX)
 else ()
     message(FATAL_ERROR "${CMAKE_SYSTEM_NAME} not supported")
 endif ()
@@ -52,3 +54,11 @@ if(WIN32)
 endif()
 
 target_link_libraries(wxclicker PRIVATE wx::core wx::base)
+
+if (X11_FOUND)
+    target_compile_definitions(wxclicker PRIVATE WXCLICKER_X11)
+    target_link_libraries(wxclicker PRIVATE X11::X11 X11::Xtst)
+    target_sources(wxclicker PRIVATE
+        mouse/x11/XTestMouseInputBackend.cxx
+    )
+endif ()
