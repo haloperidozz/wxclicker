@@ -15,23 +15,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "application/ClickerApplication.hxx"
-
 #include "mouse/RegisterPlatformBackends.hxx"
 
-#include "ui/ClickerFrame.hxx"
+#include <memory>
 
-namespace wxclicker::application {
+#include "mouse/MouseInputBackendRegistry.hxx"
 
-bool ClickerApplication::OnInit()
+#include "mouse/x11/XTestMouseInputBackend.hxx"
+
+void wxclicker::mouse::RegisterPlatformBackends()
 {
-    mouse::RegisterPlatformBackends();
-    
-    auto* pFrame{new ui::ClickerFrame{nullptr}};
-    pFrame->Show(true);
-    return true;
+    auto& registry{MouseInputBackendRegistry::Instance()};
+
+    // TODO:
 }
-
-} // namespace wxclicker::application
-
-wxIMPLEMENT_APP(wxclicker::application::ClickerApplication);
