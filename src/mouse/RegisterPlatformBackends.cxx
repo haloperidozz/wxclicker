@@ -22,16 +22,13 @@
 #include "mouse/MouseInputBackendRegistry.hxx"
 
 #if defined(WXCLICKER_WIN32)
-    #include "mouse/win32/SendInputBackend.hxx"
-    #include "mouse/win32/NtUserSendInputBackend.hxx"
+#include "mouse/win32/SendInputBackend.hxx"
+#include "mouse/win32/NtUserSendInputBackend.hxx"
 #endif
 
 #if defined(WXCLICKER_LINUX)
-    #include "mouse/gnulinux/UinputMouseInputBackend.hxx"
-#endif
-
-#if defined(WXCLICKER_X11)
-    #include "mouse/x11/XTestMouseInputBackend.hxx"
+#include "mouse/gnulinux/UinputMouseInputBackend.hxx"
+#include "mouse/x11/XTestMouseInputBackend.hxx"
 #endif
 
 namespace wxclicker::mouse {
@@ -54,26 +51,15 @@ void SafeRegister(Args&&... args)
 
 void RegisterPlatformBackends()
 {
-    auto& registry{MouseInputBackendRegistry::Instance()};
-
 #if defined(WXCLICKER_WIN32)
-    using namespace win32;
-
-    SafeRegister<NtUserSendInputBackend>();
-    SafeRegister<NtUserSendInputBackend>(true);
-    SafeRegister<SendInputBackend>();
+    SafeRegister<win32::NtUserSendInputBackend>();
+    SafeRegister<win32::NtUserSendInputBackend>(true);
+    SafeRegister<win32::SendInputBackend>();
 #endif
 
 #if defined(WXCLICKER_LINUX)
-    using namespace gnulinux;
-
-    SafeRegister<UinputMouseInputBackend>();
-#endif
-
-#if defined(WXCLICKER_X11)
-    using namespace x11;
-
-    SafeRegister<XTestMouseInputBackend>();
+    SafeRegister<gnulinux::UinputMouseInputBackend>();
+    SafeRegister<x11::XTestMouseInputBackend>();
 #endif
 }
 
