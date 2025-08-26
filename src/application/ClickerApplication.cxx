@@ -27,8 +27,8 @@ bool ClickerApplication::OnInit()
 {
     mouse::RegisterPlatformBackends();
     
-    auto* pFrame{new ui::ClickerFrame{nullptr}};
-    pFrame->Show(true);
+    auto* frame{new ui::ClickerFrame{nullptr}};
+    frame->Show();
     return true;
 }
 

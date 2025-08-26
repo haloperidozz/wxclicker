@@ -25,7 +25,7 @@ namespace wxclicker::ui {
 
 ClickerFrame::ClickerFrame(wxWindow* pParent)
     : BaseClickerFrame(pParent, wxID_ANY,
-        wxString::Format("%s %s", buildinfo::AppName, buildinfo::Version))
+        wxString::Format("%s [%s]", buildinfo::AppName, buildinfo::Version))
 {
     SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOW));
 
@@ -33,8 +33,8 @@ ClickerFrame::ClickerFrame(wxWindow* pParent)
 
     _clicker.OnFinished([this]{
         CallAfter([this]{
-            _pStart->Enable();
-            _pStop->Disable();
+            _startButton->Enable();
+            _stopButton->Disable();
         });
     });
 }
@@ -43,63 +43,67 @@ void ClickerFrame::OnIntervalChanged([[maybe_unused]] wxSpinEvent& event)
 {
     using namespace std::chrono;
 
-    _options.interval  = hours(_pHours->GetValue());
-    _options.interval += minutes(_pMinutes->GetValue());
-    _options.interval += seconds(_pSeconds->GetValue());
-    _options.interval += milliseconds(_pMilliseconds->GetValue());
+    _options.interval  = hours(_hoursSpinCtrl->GetValue());
+    _options.interval += minutes(_minsSpinCtrl->GetValue());
+    _options.interval += seconds(_secsSpinCtrl->GetValue());
+    _options.interval += milliseconds(_millisSpinCtrl->GetValue());
 }
 
 void ClickerFrame::OnMouseButtonChanged([[maybe_unused]] wxCommandEvent& event)
 {
-    const auto selection{_pMouseButton->GetStringSelection()};
+    const auto mouseButton{_mouseButtonChoice->GetStringSelection()};
 
-    if (selection == "Left") {
+    if (mouseButton == "Left") {
         _options.button = mouse::MouseButton::Left;
     }
-    else if (selection == "Middle") {
+    else if (mouseButton == "Middle") {
         _options.button = mouse::MouseButton::Middle;
     }
-    else if (selection == "Right") {
+    else if (mouseButton == "Right") {
         _options.button = mouse::MouseButton::Right;
     }
 }
 
 void ClickerFrame::OnClickTypeChanged([[maybe_unused]] wxCommandEvent& event)
 {
-    const auto selection{_pClickType->GetStringSelection()};
+    const auto clickType{_clickTypeChoice->GetStringSelection()};
 
-    if (selection == "Single") {
+    if (clickType == "Single") {
         _options.clickCount = 1;
     }
-    else if (selection == "Double") {
+    else if (clickType == "Double") {
         _options.clickCount = 2;
     }
 }
 
 void ClickerFrame::OnRepeatModeChanged([[maybe_unused]] wxCommandEvent& event)
 {
-    if (_pRepeat->GetValue()) {
-        _options.repeatTimes = _pRepeatCount->GetValue();
-        _pRepeatCount->Enable();
+    const auto isRepeatUntilStopped{
+        _repeatUntilStoppedRadioButton->GetValue()
+    };
+
+    if (isRepeatUntilStopped) {
+        _options.repeatTimes = std::nullopt;
     }
     else {
-        _options.repeatTimes = std::nullopt;
-        _pRepeatCount->Disable();
+        _options.repeatTimes = _repeatCountSpinCtrl->GetValue();
     }
+
+    _repeatCountSpinCtrl->Enable(!isRepeatUntilStopped);
 }
 
 void ClickerFrame::OnRepeatCountChanged([[maybe_unused]] wxSpinEvent& event)
 {
-    _options.repeatTimes = _pRepeatCount->GetValue();
+    _options.repeatTimes = _repeatCountSpinCtrl->GetValue();
 }
 
 void ClickerFrame::OnLocationModeChanged([[maybe_unused]] wxCommandEvent& event)
 {
-    const auto customLoc{_pCustomLocation->GetValue()};
+    const auto isCustomLocation{_customLocRadioButton->GetValue()};
 
-    if (customLoc) {
-        const auto x{_pLocX->GetValue()};
-        const auto y{_pLocY->GetValue()};
+    if (isCustomLocation) {
+        const auto x{_xSpinCtrl->GetValue()};
+        const auto y{_ySpinCtrl->GetValue()};
 
         _options.clickPosition = std::make_pair(x, y);
     }
@@ -107,38 +111,36 @@ void ClickerFrame::OnLocationModeChanged([[maybe_unused]] wxCommandEvent& event)
         _options.clickPosition = std::nullopt;
     }
 
-    _pPickLocation->Enable(customLoc);
-    _pLocX->Enable(customLoc);
-    _pLocY->Enable(customLoc);
+    _pickLocationButton->Enable(isCustomLocation);
+    _xSpinCtrl->Enable(isCustomLocation);
+    _ySpinCtrl->Enable(isCustomLocation);
 }
 
 void ClickerFrame::OnPickLocation([[maybe_unused]] wxCommandEvent& event)
 {
-    if (const auto position = PickScreenPointDialog::Pick(this)) {
-        const auto point{*position};
+    if (const auto point = PickScreenPointDialog::Pick(this)) {
+        _options.clickPosition = std::make_pair((*point).x, (*point).y);
 
-        _options.clickPosition = std::make_pair(point.x, point.y);
-
-        _pLocX->SetValue(point.x);
-        _pLocY->SetValue(point.y);
+        _xSpinCtrl->SetValue((*point).x);
+        _ySpinCtrl->SetValue((*point).y);
     }
 }
 
 void ClickerFrame::OnLocationChanged([[maybe_unused]] wxSpinEvent& event)
 {
-    const auto x{_pLocX->GetValue()};
-    const auto y{_pLocY->GetValue()};
+    const auto x{_xSpinCtrl->GetValue()};
+    const auto y{_ySpinCtrl->GetValue()};
 
     _options.clickPosition = std::make_pair(x, y);
 }
 
 void ClickerFrame::OnBackendChanged([[maybe_unused]] wxCommandEvent& event)
 {
-    const auto selection{_pBackend->GetStringSelection()};
+    const auto selectedBackend{_backendChoice->GetStringSelection()};
 
     const auto& registry{mouse::MouseInputBackendRegistry::Instance()};
 
-    _backend = registry.Get(selection.ToStdString());
+    _backend = registry.Get(selectedBackend.ToStdString());
 }
 
 void ClickerFrame::OnHotkeyRecord([[maybe_unused]] wxCommandEvent& event)
@@ -154,8 +156,8 @@ void ClickerFrame::OnStart([[maybe_unused]] wxCommandEvent& event)
         _backend = registry.GetDefaultBackend();
     }
 
-    _pStart->Disable();
-    _pStop->Enable();
+    _startButton->Disable();
+    _stopButton->Enable();
 
     _clicker.Configure(_options);
     _clicker.Start(_backend);
@@ -171,17 +173,20 @@ void ClickerFrame::InitBackends()
     const auto& registry{mouse::MouseInputBackendRegistry::Instance()};
 
     for (const auto& backend : registry.List()) {
-        _pBackend->Append(wxString{backend->GetName()});
+        const auto backendName{wxString{backend->GetName()}};
+
+        _backendChoice->Append(backendName);
     }
 
     const auto defaultBackend{registry.GetDefaultBackend()};
 
     if (defaultBackend) {
-        const auto name{defaultBackend->GetName()};
-        const auto index{_pBackend->FindString(wxString{name})};
+        const auto backendName{wxString{defaultBackend->GetName()}};
+
+        const auto index{_backendChoice->FindString(backendName)};
 
         if (index != wxNOT_FOUND) {
-            _pBackend->SetSelection(index);
+            _backendChoice->SetSelection(index);
         }
 
         _backend = defaultBackend;

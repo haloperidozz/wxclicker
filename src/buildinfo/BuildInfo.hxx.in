@@ -19,7 +19,7 @@
 
 namespace wxclicker::buildinfo {
 
-inline constexpr auto AppName = "@PROJECT_NAME@";
-inline constexpr auto Version = "@PROJECT_VERSION@";
+inline constexpr auto AppName{"@PROJECT_NAME@"};
+inline constexpr auto Version{"@PROJECT_VERSION@"};
 
 } // namespace wxclicker::buildinfo

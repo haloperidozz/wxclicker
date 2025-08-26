@@ -21,9 +21,10 @@
 
 namespace wxclicker::ui {
 
-PickScreenPointDialog::PickScreenPointDialog(wxWindow* pParent)
-    : wxDialog(pParent, wxID_ANY, "",
-               wxDefaultPosition, wxGetDisplaySize(), wxSTAY_ON_TOP)
+PickScreenPointDialog::PickScreenPointDialog(wxWindow* parent)
+    : wxDialog(
+        parent, wxID_ANY, "", wxDefaultPosition, wxGetDisplaySize(),
+        wxSTAY_ON_TOP)
 {
     SetBackgroundStyle(wxBG_STYLE_PAINT);
     SetTransparent(128);
@@ -35,9 +36,9 @@ PickScreenPointDialog::PickScreenPointDialog(wxWindow* pParent)
     ShowFullScreen(true);
 }
 
-std::optional<wxPoint> PickScreenPointDialog::Pick(wxWindow* pParent)
+std::optional<wxPoint> PickScreenPointDialog::Pick(wxWindow* parent)
 {
-    PickScreenPointDialog dialog{pParent};
+    PickScreenPointDialog dialog{parent};
 
     if (dialog.ShowModal() == wxID_OK) {
         return dialog._pickedPoint;

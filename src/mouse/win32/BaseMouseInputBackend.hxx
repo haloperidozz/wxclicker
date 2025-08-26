@@ -27,10 +27,10 @@ namespace wxclicker::mouse::win32 {
 class BaseMouseInputBackend : public IMouseInputBackend
 {
 public:
-    void Down(MouseButton button) noexcept override;
-    void Up(MouseButton button) noexcept override;
+    void Down(MouseButton button) noexcept override final;
+    void Up(MouseButton button) noexcept override final;
 
-    void SetPosition(int x, int y) noexcept override;
+    void SetPosition(int x, int y) noexcept override final;
 
 protected:
     virtual void SendMouseInput(const MOUSEINPUT& input) noexcept = 0;

@@ -62,7 +62,7 @@
       <property name="xrc_skip_sizer">1</property>
       <object class="wxBoxSizer" expanded="true">
         <property name="minimum_size"></property>
-        <property name="name">MainBoxSizer</property>
+        <property name="name">mainSizer</property>
         <property name="orient">wxVERTICAL</property>
         <property name="permission">none</property>
         <object class="sizeritem" expanded="true">
@@ -73,7 +73,7 @@
             <property name="id">wxID_ANY</property>
             <property name="label">Click Interval</property>
             <property name="minimum_size"></property>
-            <property name="name">ClickInterval</property>
+            <property name="name">clickIntervalSizer</property>
             <property name="orient">wxHORIZONTAL</property>
             <property name="parent">1</property>
             <property name="permission">none</property>
@@ -119,7 +119,7 @@
                 <property name="minimize_button">0</property>
                 <property name="minimum_size"></property>
                 <property name="moveable">1</property>
-                <property name="name">HoursText</property>
+                <property name="name">hoursText</property>
                 <property name="pane_border">1</property>
                 <property name="pane_position"></property>
                 <property name="pane_size"></property>
@@ -182,7 +182,7 @@
                 <property name="minimize_button">0</property>
                 <property name="minimum_size"></property>
                 <property name="moveable">1</property>
-                <property name="name">_pHours</property>
+                <property name="name">_hoursSpinCtrl</property>
                 <property name="pane_border">1</property>
                 <property name="pane_position"></property>
                 <property name="pane_size"></property>
@@ -245,7 +245,7 @@
                 <property name="minimize_button">0</property>
                 <property name="minimum_size"></property>
                 <property name="moveable">1</property>
-                <property name="name">MinutesText</property>
+                <property name="name">minsText</property>
                 <property name="pane_border">1</property>
                 <property name="pane_position"></property>
                 <property name="pane_size"></property>
@@ -308,7 +308,7 @@
                 <property name="minimize_button">0</property>
                 <property name="minimum_size"></property>
                 <property name="moveable">1</property>
-                <property name="name">_pMinutes</property>
+                <property name="name">_minsSpinCtrl</property>
                 <property name="pane_border">1</property>
                 <property name="pane_position"></property>
                 <property name="pane_size"></property>
@@ -371,7 +371,7 @@
                 <property name="minimize_button">0</property>
                 <property name="minimum_size"></property>
                 <property name="moveable">1</property>
-                <property name="name">SecondsText</property>
+                <property name="name">secsText</property>
                 <property name="pane_border">1</property>
                 <property name="pane_position"></property>
                 <property name="pane_size"></property>
@@ -434,7 +434,7 @@
                 <property name="minimize_button">0</property>
                 <property name="minimum_size"></property>
                 <property name="moveable">1</property>
-                <property name="name">_pSeconds</property>
+                <property name="name">_secsSpinCtrl</property>
                 <property name="pane_border">1</property>
                 <property name="pane_position"></property>
                 <property name="pane_size"></property>
@@ -497,7 +497,7 @@
                 <property name="minimize_button">0</property>
                 <property name="minimum_size"></property>
                 <property name="moveable">1</property>
-                <property name="name">MillisecondsText</property>
+                <property name="name">millisText</property>
                 <property name="pane_border">1</property>
                 <property name="pane_position"></property>
                 <property name="pane_size"></property>
@@ -560,7 +560,7 @@
                 <property name="minimize_button">0</property>
                 <property name="minimum_size"></property>
                 <property name="moveable">1</property>
-                <property name="name">_pMilliseconds</property>
+                <property name="name">_millisSpinCtrl</property>
                 <property name="pane_border">1</property>
                 <property name="pane_position"></property>
                 <property name="pane_size"></property>
@@ -589,7 +589,7 @@
           <property name="proportion">1</property>
           <object class="wxBoxSizer" expanded="true">
             <property name="minimum_size"></property>
-            <property name="name">MainOptions</property>
+            <property name="name">mainOptionsSizer</property>
             <property name="orient">wxHORIZONTAL</property>
             <property name="permission">none</property>
             <object class="sizeritem" expanded="true">
@@ -600,7 +600,7 @@
                 <property name="id">wxID_ANY</property>
                 <property name="label">Click Options</property>
                 <property name="minimum_size"></property>
-                <property name="name">ClickOptions</property>
+                <property name="name">clickOptionsSizer</property>
                 <property name="orient">wxVERTICAL</property>
                 <property name="parent">1</property>
                 <property name="permission">none</property>
@@ -610,7 +610,7 @@
                   <property name="proportion">1</property>
                   <object class="wxBoxSizer" expanded="true">
                     <property name="minimum_size"></property>
-                    <property name="name">MouseButtonSizer</property>
+                    <property name="name">mouseButtonSizer</property>
                     <property name="orient">wxHORIZONTAL</property>
                     <property name="permission">none</property>
                     <object class="sizeritem" expanded="false">
@@ -655,7 +655,7 @@
                         <property name="minimize_button">0</property>
                         <property name="minimum_size"></property>
                         <property name="moveable">1</property>
-                        <property name="name">MouseButtonText</property>
+                        <property name="name">mouseButtonText</property>
                         <property name="pane_border">1</property>
                         <property name="pane_position"></property>
                         <property name="pane_size"></property>
@@ -716,7 +716,7 @@
                         <property name="minimize_button">0</property>
                         <property name="minimum_size"></property>
                         <property name="moveable">1</property>
-                        <property name="name">_pMouseButton</property>
+                        <property name="name">_mouseButtonChoice</property>
                         <property name="pane_border">1</property>
                         <property name="pane_position"></property>
                         <property name="pane_size"></property>
@@ -749,7 +749,7 @@
                   <property name="proportion">1</property>
                   <object class="wxBoxSizer" expanded="true">
                     <property name="minimum_size"></property>
-                    <property name="name">ClickTypeSizer</property>
+                    <property name="name">clickTypeSizer</property>
                     <property name="orient">wxHORIZONTAL</property>
                     <property name="permission">none</property>
                     <object class="sizeritem" expanded="false">
@@ -794,7 +794,7 @@
                         <property name="minimize_button">0</property>
                         <property name="minimum_size"></property>
                         <property name="moveable">1</property>
-                        <property name="name">ClickTypeText</property>
+                        <property name="name">clickTypeText</property>
                         <property name="pane_border">1</property>
                         <property name="pane_position"></property>
                         <property name="pane_size"></property>
@@ -855,7 +855,7 @@
                         <property name="minimize_button">0</property>
                         <property name="minimum_size"></property>
                         <property name="moveable">1</property>
-                        <property name="name">_pClickType</property>
+                        <property name="name">_clickTypeChoice</property>
                         <property name="pane_border">1</property>
                         <property name="pane_position"></property>
                         <property name="pane_size"></property>
@@ -892,7 +892,7 @@
                 <property name="id">wxID_ANY</property>
                 <property name="label">Click Repeat</property>
                 <property name="minimum_size"></property>
-                <property name="name">ClickRepeat</property>
+                <property name="name">clickRepeatSizer</property>
                 <property name="orient">wxVERTICAL</property>
                 <property name="parent">1</property>
                 <property name="permission">none</property>
@@ -902,7 +902,7 @@
                   <property name="proportion">1</property>
                   <object class="wxBoxSizer" expanded="true">
                     <property name="minimum_size"></property>
-                    <property name="name">RepeatLine</property>
+                    <property name="name">repeatLineSizer</property>
                     <property name="orient">wxHORIZONTAL</property>
                     <property name="permission">none</property>
                     <object class="sizeritem" expanded="false">
@@ -946,7 +946,7 @@
                         <property name="minimize_button">0</property>
                         <property name="minimum_size"></property>
                         <property name="moveable">1</property>
-                        <property name="name">_pRepeat</property>
+                        <property name="name">_repeatRadioButton</property>
                         <property name="pane_border">1</property>
                         <property name="pane_position"></property>
                         <property name="pane_size"></property>
@@ -1014,7 +1014,7 @@
                         <property name="minimize_button">0</property>
                         <property name="minimum_size"></property>
                         <property name="moveable">1</property>
-                        <property name="name">_pRepeatCount</property>
+                        <property name="name">_repeatCountSpinCtrl</property>
                         <property name="pane_border">1</property>
                         <property name="pane_position"></property>
                         <property name="pane_size"></property>
@@ -1077,7 +1077,7 @@
                         <property name="minimize_button">0</property>
                         <property name="minimum_size"></property>
                         <property name="moveable">1</property>
-                        <property name="name">TimesText</property>
+                        <property name="name">timesText</property>
                         <property name="pane_border">1</property>
                         <property name="pane_position"></property>
                         <property name="pane_size"></property>
@@ -1140,7 +1140,7 @@
                     <property name="minimize_button">0</property>
                     <property name="minimum_size"></property>
                     <property name="moveable">1</property>
-                    <property name="name">_pRepeatUntilStopped</property>
+                    <property name="name">_repeatUntilStoppedRadioButton</property>
                     <property name="pane_border">1</property>
                     <property name="pane_position"></property>
                     <property name="pane_size"></property>
@@ -1169,15 +1169,15 @@
             </object>
           </object>
         </object>
-        <object class="sizeritem" expanded="false">
+        <object class="sizeritem" expanded="true">
           <property name="border">5</property>
           <property name="flag">wxALL|wxEXPAND</property>
           <property name="proportion">1</property>
-          <object class="wxStaticBoxSizer" expanded="false">
+          <object class="wxStaticBoxSizer" expanded="true">
             <property name="id">wxID_ANY</property>
             <property name="label">Cursor Position</property>
             <property name="minimum_size"></property>
-            <property name="name">CursorPosition</property>
+            <property name="name">cursorPositionSizer</property>
             <property name="orient">wxHORIZONTAL</property>
             <property name="parent">1</property>
             <property name="permission">none</property>
@@ -1222,7 +1222,7 @@
                 <property name="minimize_button">0</property>
                 <property name="minimum_size"></property>
                 <property name="moveable">1</property>
-                <property name="name">_pCurrentLocation</property>
+                <property name="name">_currentLocRadioButton</property>
                 <property name="pane_border">1</property>
                 <property name="pane_position"></property>
                 <property name="pane_size"></property>
@@ -1247,13 +1247,13 @@
                 <event name="OnRadioButton">OnLocationModeChanged</event>
               </object>
             </object>
-            <object class="sizeritem" expanded="false">
+            <object class="sizeritem" expanded="true">
               <property name="border">5</property>
               <property name="flag">wxEXPAND</property>
               <property name="proportion">1</property>
-              <object class="wxBoxSizer" expanded="false">
+              <object class="wxBoxSizer" expanded="true">
                 <property name="minimum_size"></property>
-                <property name="name">LocationLine</property>
+                <property name="name">locationLineSizer</property>
                 <property name="orient">wxHORIZONTAL</property>
                 <property name="permission">none</property>
                 <object class="sizeritem" expanded="false">
@@ -1297,7 +1297,7 @@
                     <property name="minimize_button">0</property>
                     <property name="minimum_size"></property>
                     <property name="moveable">1</property>
-                    <property name="name">_pCustomLocation</property>
+                    <property name="name">_customLocRadioButton</property>
                     <property name="pane_border">1</property>
                     <property name="pane_position"></property>
                     <property name="pane_size"></property>
@@ -1371,7 +1371,7 @@
                     <property name="minimize_button">0</property>
                     <property name="minimum_size"></property>
                     <property name="moveable">1</property>
-                    <property name="name">_pPickLocation</property>
+                    <property name="name">_pickLocationButton</property>
                     <property name="pane_border">1</property>
                     <property name="pane_position"></property>
                     <property name="pane_size"></property>
@@ -1439,7 +1439,7 @@
                     <property name="minimize_button">0</property>
                     <property name="minimum_size"></property>
                     <property name="moveable">1</property>
-                    <property name="name">X</property>
+                    <property name="name">xText</property>
                     <property name="pane_border">1</property>
                     <property name="pane_position"></property>
                     <property name="pane_size"></property>
@@ -1502,7 +1502,7 @@
                     <property name="minimize_button">0</property>
                     <property name="minimum_size"></property>
                     <property name="moveable">1</property>
-                    <property name="name">_pLocX</property>
+                    <property name="name">_xSpinCtrl</property>
                     <property name="pane_border">1</property>
                     <property name="pane_position"></property>
                     <property name="pane_size"></property>
@@ -1565,7 +1565,7 @@
                     <property name="minimize_button">0</property>
                     <property name="minimum_size"></property>
                     <property name="moveable">1</property>
-                    <property name="name">Y</property>
+                    <property name="name">yText</property>
                     <property name="pane_border">1</property>
                     <property name="pane_position"></property>
                     <property name="pane_size"></property>
@@ -1628,7 +1628,7 @@
                     <property name="minimize_button">0</property>
                     <property name="minimum_size"></property>
                     <property name="moveable">1</property>
-                    <property name="name">_pLocY</property>
+                    <property name="name">_ySpinCtrl</property>
                     <property name="pane_border">1</property>
                     <property name="pane_position"></property>
                     <property name="pane_size"></property>
@@ -1661,7 +1661,7 @@
             <property name="id">wxID_ANY</property>
             <property name="label">Additional Options</property>
             <property name="minimum_size"></property>
-            <property name="name">AdditionalOptions</property>
+            <property name="name">additionalOptionsSizer</property>
             <property name="orient">wxVERTICAL</property>
             <property name="parent">1</property>
             <property name="permission">none</property>
@@ -1671,7 +1671,7 @@
               <property name="proportion">1</property>
               <object class="wxBoxSizer" expanded="true">
                 <property name="minimum_size"></property>
-                <property name="name">BackendOptions</property>
+                <property name="name">backendOptions</property>
                 <property name="orient">wxHORIZONTAL</property>
                 <property name="permission">none</property>
                 <object class="sizeritem" expanded="false">
@@ -1716,7 +1716,7 @@
                     <property name="minimize_button">0</property>
                     <property name="minimum_size"></property>
                     <property name="moveable">1</property>
-                    <property name="name">BackendText</property>
+                    <property name="name">backendText</property>
                     <property name="pane_border">1</property>
                     <property name="pane_position"></property>
                     <property name="pane_size"></property>
@@ -1777,7 +1777,7 @@
                     <property name="minimize_button">0</property>
                     <property name="minimum_size"></property>
                     <property name="moveable">1</property>
-                    <property name="name">_pBackend</property>
+                    <property name="name">_backendChoice</property>
                     <property name="pane_border">1</property>
                     <property name="pane_position"></property>
                     <property name="pane_size"></property>
@@ -1810,7 +1810,7 @@
               <property name="proportion">1</property>
               <object class="wxBoxSizer" expanded="true">
                 <property name="minimum_size"></property>
-                <property name="name">HotkeyOptions</property>
+                <property name="name">hotkeyOptionsSizer</property>
                 <property name="orient">wxHORIZONTAL</property>
                 <property name="permission">none</property>
                 <object class="sizeritem" expanded="false">
@@ -1855,7 +1855,7 @@
                     <property name="minimize_button">0</property>
                     <property name="minimum_size"></property>
                     <property name="moveable">1</property>
-                    <property name="name">HotkeyText</property>
+                    <property name="name">hotkeyText</property>
                     <property name="pane_border">1</property>
                     <property name="pane_position"></property>
                     <property name="pane_size"></property>
@@ -1924,7 +1924,7 @@
                     <property name="minimize_button">0</property>
                     <property name="minimum_size"></property>
                     <property name="moveable">1</property>
-                    <property name="name">_pHotkeyButton</property>
+                    <property name="name">_hotkeyButton</property>
                     <property name="pane_border">1</property>
                     <property name="pane_position"></property>
                     <property name="pane_size"></property>
@@ -1991,7 +1991,7 @@
                     <property name="minimize_button">0</property>
                     <property name="minimum_size"></property>
                     <property name="moveable">1</property>
-                    <property name="name">_pHotkeyText</property>
+                    <property name="name">_hotkeyText</property>
                     <property name="pane_border">1</property>
                     <property name="pane_position"></property>
                     <property name="pane_size"></property>
@@ -2025,7 +2025,7 @@
           <property name="proportion">0</property>
           <object class="wxBoxSizer" expanded="true">
             <property name="minimum_size"></property>
-            <property name="name">Buttons</property>
+            <property name="name">buttonsSizer</property>
             <property name="orient">wxHORIZONTAL</property>
             <property name="permission">none</property>
             <object class="sizeritem" expanded="false">
@@ -2077,7 +2077,7 @@
                 <property name="minimize_button">0</property>
                 <property name="minimum_size"></property>
                 <property name="moveable">1</property>
-                <property name="name">_pStart</property>
+                <property name="name">_startButton</property>
                 <property name="pane_border">1</property>
                 <property name="pane_position"></property>
                 <property name="pane_size"></property>
@@ -2152,7 +2152,7 @@
                 <property name="minimize_button">0</property>
                 <property name="minimum_size"></property>
                 <property name="moveable">1</property>
-                <property name="name">_pStop</property>
+                <property name="name">_stopButton</property>
                 <property name="pane_border">1</property>
                 <property name="pane_position"></property>
                 <property name="pane_size"></property>

@@ -38,25 +38,25 @@ class BaseClickerFrame : public wxFrame
 	private:
 
 	protected:
-		wxSpinCtrl* _pHours;
-		wxSpinCtrl* _pMinutes;
-		wxSpinCtrl* _pSeconds;
-		wxSpinCtrl* _pMilliseconds;
-		wxChoice* _pMouseButton;
-		wxChoice* _pClickType;
-		wxRadioButton* _pRepeat;
-		wxSpinCtrl* _pRepeatCount;
-		wxRadioButton* _pRepeatUntilStopped;
-		wxRadioButton* _pCurrentLocation;
-		wxRadioButton* _pCustomLocation;
-		wxButton* _pPickLocation;
-		wxSpinCtrl* _pLocX;
-		wxSpinCtrl* _pLocY;
-		wxChoice* _pBackend;
-		wxButton* _pHotkeyButton;
-		wxTextCtrl* _pHotkeyText;
-		wxButton* _pStart;
-		wxButton* _pStop;
+		wxSpinCtrl* _hoursSpinCtrl;
+		wxSpinCtrl* _minsSpinCtrl;
+		wxSpinCtrl* _secsSpinCtrl;
+		wxSpinCtrl* _millisSpinCtrl;
+		wxChoice* _mouseButtonChoice;
+		wxChoice* _clickTypeChoice;
+		wxRadioButton* _repeatRadioButton;
+		wxSpinCtrl* _repeatCountSpinCtrl;
+		wxRadioButton* _repeatUntilStoppedRadioButton;
+		wxRadioButton* _currentLocRadioButton;
+		wxRadioButton* _customLocRadioButton;
+		wxButton* _pickLocationButton;
+		wxSpinCtrl* _xSpinCtrl;
+		wxSpinCtrl* _ySpinCtrl;
+		wxChoice* _backendChoice;
+		wxButton* _hotkeyButton;
+		wxTextCtrl* _hotkeyText;
+		wxButton* _startButton;
+		wxButton* _stopButton;
 
 		// Virtual event handlers, override them in your derived class
 		virtual void OnIntervalChanged( wxSpinEvent& event ) { event.Skip(); }

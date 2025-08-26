@@ -27,10 +27,10 @@ class PickScreenPointDialog final : public wxDialog
 {
 public:
     [[nodiscard]]
-    static std::optional<wxPoint> Pick(wxWindow* pParent);
+    static std::optional<wxPoint> Pick(wxWindow* parent);
 
 private:
-    explicit PickScreenPointDialog(wxWindow* pParent);
+    explicit PickScreenPointDialog(wxWindow* parent);
 
     void OnMouseClick(wxMouseEvent& event);
     void OnMouseMove(wxMouseEvent& event);

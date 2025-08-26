@@ -17,6 +17,7 @@
 
 #include "mouse/win32/NtUserSendInputBackend.hxx"
 
+#include <cstring>
 #include <stdexcept>
 
 namespace wxclicker::mouse::win32 {
@@ -33,10 +34,10 @@ NtUserSendInputBackend::NtUserSendInputBackend(bool spoof)
 
 NtUserSendInputBackend::~NtUserSendInputBackend()
 {
-    const auto pPtr{reinterpret_cast<LPVOID>(_fnNtUserSendInput)};
+    const auto ptr{reinterpret_cast<LPVOID>(_fnNtUserSendInput)};
 
-    if (_spoof && pPtr) {
-        ::VirtualFree(pPtr, 0, MEM_RELEASE);
+    if (_spoof && ptr) {
+        ::VirtualFree(ptr, 0, MEM_RELEASE);
     }
 }
 
@@ -58,40 +59,37 @@ void NtUserSendInputBackend::SendMouseInput(const MOUSEINPUT& input) noexcept
 NtUserSendInputBackend::NtUserSendInputType
 NtUserSendInputBackend::FindNtUserSendInput(bool spoof) const
 {
-    constexpr SIZE_T AllocSize = 4096; // 4 KB page
-    constexpr SIZE_T CopySize  = 40;   // 23 bytes on Win11 + safety margin
+    constexpr SIZE_T AllocSize{4096}; // 4 KB page
+    constexpr SIZE_T CopySize{40};    // 23 bytes on Win11 + safety margin
 
-    FARPROC ntUserSendInputAddr{nullptr};
+    FARPROC address{nullptr};
 
-    const auto win32uMod{::GetModuleHandleW(L"win32u.dll")};
-    const auto user32Mod{::GetModuleHandleW(L"user32.dll")};
+    const auto win32uModule{::GetModuleHandleW(L"win32u.dll")};
+    const auto user32Module{::GetModuleHandleW(L"user32.dll")};
     
-    if (win32uMod) {
-        ntUserSendInputAddr = ::GetProcAddress(win32uMod, "NtUserSendInput");
+    if (win32uModule) {
+        address = ::GetProcAddress(win32uModule, "NtUserSendInput");
     }
 
-    if (!ntUserSendInputAddr && user32Mod) {
-        ntUserSendInputAddr = ::GetProcAddress(user32Mod, "NtUserSendInput");
+    if (!address && user32Module) {
+        address = ::GetProcAddress(user32Module, "NtUserSendInput");
     }
 
     if (!spoof) {
-        return reinterpret_cast<NtUserSendInputType>(ntUserSendInputAddr);
+        return reinterpret_cast<NtUserSendInputType>(address);
     }
 
-    LPVOID ntUserSendInputBytes{
+    LPVOID spoofed{
         ::VirtualAlloc(0, AllocSize, MEM_COMMIT, PAGE_EXECUTE_READWRITE)
     };
 
-    if (!ntUserSendInputBytes) {
+    if (!spoofed) {
         return nullptr;
     }
 
-    ::memcpy(
-        ntUserSendInputBytes,
-        reinterpret_cast<LPVOID>(ntUserSendInputAddr),
-        CopySize);
+    std::memcpy(spoofed, reinterpret_cast<LPVOID>(address), CopySize);
 
-    return reinterpret_cast<NtUserSendInputType>(ntUserSendInputBytes);
+    return reinterpret_cast<NtUserSendInputType>(spoofed);
 }
 
 } // namespace wxclicker::mouse::win32
