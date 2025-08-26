@@ -36,30 +36,32 @@ namespace wxclicker::mouse {
 namespace {
 
 template<typename T, typename... Args>
-void SafeRegister(Args&&... args)
+void SafeRegister(ErrorCallback onError, Args&&... args)
 {
     auto& reg{MouseInputBackendRegistry::Instance()};
 
     try {
         reg.Register(std::make_shared<T>(std::forward<Args>(args)...));
+    } catch (const std::exception &ex) {
+        onError(ex.what());
     } catch (...) {
-        // ignore?
+        onError("unknonw exception");
     }
 }
 
 } // namespace
 
-void RegisterPlatformBackends()
+void RegisterPlatformBackends(ErrorCallback onError)
 {
 #if defined(WXCLICKER_WIN32)
-    SafeRegister<win32::NtUserSendInputBackend>();
-    SafeRegister<win32::NtUserSendInputBackend>(true);
-    SafeRegister<win32::SendInputBackend>();
+    SafeRegister<win32::NtUserSendInputBackend>(onError);
+    SafeRegister<win32::NtUserSendInputBackend>(onError, true);
+    SafeRegister<win32::SendInputBackend>(onError);
 #endif
 
 #if defined(WXCLICKER_LINUX)
-    SafeRegister<gnulinux::UinputMouseInputBackend>();
-    SafeRegister<x11::XTestMouseInputBackend>();
+    SafeRegister<gnulinux::UinputMouseInputBackend>(onError);
+    SafeRegister<x11::XTestMouseInputBackend>(onError);
 #endif
 }
 

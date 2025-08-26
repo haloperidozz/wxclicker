@@ -17,8 +17,13 @@
 
 #pragma once
 
+#include <functional>
+#include <string_view>
+
 namespace wxclicker::mouse {
 
-void RegisterPlatformBackends();
+using ErrorCallback = std::function<void(std::string_view)>;
+
+void RegisterPlatformBackends(ErrorCallback onError);
 
 } // namespace wxclicker::mouse

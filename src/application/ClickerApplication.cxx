@@ -25,10 +25,13 @@ namespace wxclicker::application {
 
 bool ClickerApplication::OnInit()
 {
-    mouse::RegisterPlatformBackends();
-    
+    mouse::RegisterPlatformBackends([](std::string_view error){
+        wxLogError("%s", error);
+    });
+
     auto* frame{new ui::ClickerFrame{nullptr}};
     frame->Show();
+
     return true;
 }
 
